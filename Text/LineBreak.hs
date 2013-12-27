@@ -1,11 +1,59 @@
-module Text.LineBreak (breakString, BreakFormat (..)) where
+--------------------------------------------------------------------------------
+-- |
+-- Module      :  Text.LineBreak
+-- Copyright   :  (C) 2013 Francesco Ariis
+-- License     :  BSD3 (see LICENSE file)
+--
+-- Maintainer  :  Francesco Ariis <fa-ml@ariis.it>
+-- Stability   :  provisional
+-- Portability :  portable
+--
+-- Simple functions to break a String to fit a maximum text width, using
+-- Knuth-Lian hyphenation algorithm.
+--
+-- Example:
+--
+-- > import Text.Hyphenation
+-- > import Text.LineBreak
+-- >
+-- > hyp = Just english_US
+-- > bf = BreakFormat 25 '-' hyp
+-- > cs = "Using hyphenation with gruesomely non parsimonious wording."
+-- >
+-- > main = putStr $ breakString bf cs
+--
+-- will output:
+--
+-- > Using hyphenation with
+-- > gruesomely non parsimo-
+-- > nious wording.
+--
+-------------------------------------------------------------------------------
+
+module Text.LineBreak ( breakString, breakStringLn, BreakFormat (..) ) where
 
 import Data.List (intercalate)
 import Text.Hyphenation
 
+-- TODO: what to do in overflow case?
+
+-- @
+--   let hyp = Just english_US in
+--   putStr $ breakString (BreakFormat 55 '-' hyp) str2
+-- @
+--
+-- @
+--   Mathematicians seek out patterns and use them to formu-
+--   late new conjectures. Mathematicians resolve the truth
+--   or falsity of conjectures by mathematical proof.
+-- @
 
 -- TYPES --
 
+-- | How to break the Strings: maximum width of the lines, symbol to use
+-- to hyphenate a word, Hypenator to use (language, exceptions, etc. Refer to
+-- `Text.Hyphenation` for more info). To break lines without hyphenating, put
+-- @Nothing@ in @bfHyphenator@.
 data BreakFormat = BreakFormat { bfMaxCol :: Int,
                                  bfHyphenSymbol :: Char,
                                  bfHyphenator :: Maybe Hyphenator }
@@ -77,7 +125,8 @@ putLine oldcs bf line =
     where f oldcs w = putWord oldcs bf w
 
 
--- | TODO
+-- | Breaks a String to make it fit in a certain width. The output is a String,
+-- suitable for writing to screen or file.
 breakString :: BreakFormat -> String -> String
 breakString bf para =
         let ls = lines para in
