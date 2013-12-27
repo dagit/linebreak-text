@@ -9,7 +9,7 @@
 -- Portability :  portable
 --
 -- Simple functions to break a String to fit a maximum text width, using
--- Knuth-Lian hyphenation algorithm.
+-- Knuth-Liang hyphenation algorithm.
 --
 -- Example:
 --
