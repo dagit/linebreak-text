@@ -128,7 +128,11 @@ putLine oldcs bf line =
 -- | Breaks a String to make it fit in a certain width. The output is a String,
 -- suitable for writing to screen or file.
 breakString :: BreakFormat -> String -> String
-breakString bf para =
+breakString bf para = unlines $ breakStringLn bf para
+
+-- | Convenience for @lines $ breakString bf cs@
+breakStringLn :: BreakFormat -> String -> [String]
+breakStringLn bf para =
         let ls = lines para in
-        unlines $ map (putLine "" bf) ls
+        map (putLine "" bf) ls
 
