@@ -52,7 +52,7 @@ import Text.Hyphenation
 
 -- | How to break the Strings: maximum width of the lines, symbol to use
 -- to hyphenate a word, Hypenator to use (language, exceptions, etc. Refer to
--- `Text.Hyphenation` for more info). To break lines without hyphenating, put
+-- "Text.Hyphenation" for more info). To break lines without hyphenating, put
 -- @Nothing@ in @bfHyphenator@.
 data BreakFormat = BreakFormat { bfMaxCol :: Int,
                                  bfHyphenSymbol :: Char,
