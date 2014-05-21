@@ -19,4 +19,4 @@ source-repository head
 library
   -- Modules exported by the library.
   exposed-modules:     Text.LineBreak
-  build-depends:       base >= 4.5 && < 4.6, hyphenation >= 0.4 && < 0.5
+  build-depends:       base >= 4.5 && < 5, hyphenation >= 0.4 && < 1
