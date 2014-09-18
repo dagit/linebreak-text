@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 -- |
 -- Module      :  Text.LineBreak
--- Copyright   :  (C) 2013 Francesco Ariis
+-- Copyright   :  (C) 2014 Francesco Ariis
 -- License     :  BSD3 (see LICENSE file)
 --
 -- Maintainer  :  Francesco Ariis <fa-ml@ariis.it>
