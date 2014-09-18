@@ -11,14 +11,21 @@
 -- Simple functions to break a String to fit a maximum text width, using
 -- Knuth-Liang hyphenation algorithm.
 --
--- Simple example usage:
--- >>> let hyp = Just english_US
--- >>> let bf = BreakFormat 25 4 '-' hyp
--- >>> let cs = "Using hyphenation with gruesomely non parsimonious wording."
--- >>> putStr $ breakString bf cs
--- Using hyphenation with
--- gruesomely non parsimo-
--- nious wording.
+-- Example:
+--
+-- > import Text.Hyphenation
+-- > import Text.LineBreak
+-- >
+-- > hyp = Just english_US
+-- > bf = BreakFormat 25 4 '-' hyp
+-- > cs = "Using hyphenation with gruesomely non parsimonious wording."
+-- > main = putStr $ breakString bf cs
+--
+-- will output:
+--
+-- > Using hyphenation with
+-- > gruesomely non parsimo-
+-- > nious wording.
 --
 -------------------------------------------------------------------------------
 
@@ -148,8 +155,9 @@ breakWord mhy ch avspace cs nlb = case find ((<= avspace) . hypLen) poss of
     where hw = case mhy of
                  Just hy -> hyphenate hy cs
                  Nothing -> [cs]
-          poss = map cf $ reverse $ zip (inits hw) (tails hw)
-            -- poss ~= ["cascata\n","cas-\ncata","casca-\nta","\ncascata"]
+          poss = error $ show $ map cf $ reverse $ zip (inits hw) (tails hw)
+            -- poss ~= ["hyphenation\n","hyphen-\nation",
+            --          "hy-\nphenation","\nhyphenation"]
 
           -- crea hyphenated from two bits
           cf ([], ew) = (if nlb then "" else "\n") ++ concat ew
