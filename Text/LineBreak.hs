@@ -112,7 +112,7 @@ putElem (BreakFormat maxc _ sym hyp)
                      (ElSpace _ _) -> putString bs maxc "\n"
                      (ElWord cs)   -> putString bs maxc (broken cs)
     where avspace = maxc - currc -- starting col: 1
-          fstcol  = if currc == 0 then True else False
+          fstcol  = currc == 0
           broken cs = breakWord hyp sym avspace cs fstcol
 
 elLenght :: Element -> Int
@@ -134,8 +134,8 @@ putString (BrState currc currstr) maxcol (c:cs) =
                                then 0
                                else currc + 1
                     bs' = if currc' <= maxcol
-                            then (BrState currc' (currstr ++ [c]))
-                            else (BrState 1      (currstr ++ "\n" ++ [c]))
+                            then BrState currc' (currstr ++ [c])
+                            else BrState 1      (currstr ++ "\n" ++ [c])
                 in putString bs' maxcol cs
 
 -- breaks a word given remaining space, using an hypenator
@@ -156,13 +156,13 @@ breakWord mhy ch avspace cs nlb = case find ((<= avspace) . hypLen) poss of
           cf (iw, []) = concat iw ++ "\n"
           cf (iw, ew) = concat iw ++ [ch] ++ "\n" ++ concat ew
 
-          hypLen cs = length . (takeWhile (/= '\n')) $ cs
+          hypLen cs = length . takeWhile (/= '\n') $ cs
 
 -- CLEAN --
 
 -- removes eof/eol whitespace
 hackClean :: String -> String
-hackClean cs = noEoflWs $ cs
+hackClean cs = noEoflWs cs
     where noEoflWs cs = f "" cs
 
           -- the ugliness
