@@ -35,6 +35,9 @@ import Text.Hyphenation
 import Data.Char (isSpace)
 import Data.List (find, inits, tails, span)
 
+-- TODO: tabs are broken (as it is just a plain substitution). Use a
+--       smart sub method. [bug] [test]
+
 
 -----------
 -- TYPES --
@@ -64,7 +67,7 @@ data Element = ElWord String     -- things we need to place
 -- | Breaks some text (String) to make it fit in a certain width. The output
 -- is a String, suitable for writing to screen or file.
 breakString :: BreakFormat -> String -> String
-breakString bf cs = hackClean out
+breakString bf cs = out
     where els = parseEls (subTabs (bfTabRep bf) cs)
           out = bsBroken $ foldl (putElem bf) (BrState 0 "") els
 
@@ -155,9 +158,7 @@ breakWord mhy ch avspace cs nlb = case find ((<= avspace) . hypLen) poss of
     where hw = case mhy of
                  Just hy -> hyphenate hy cs
                  Nothing -> [cs]
-          poss = error $ show $ map cf $ reverse $ zip (inits hw) (tails hw)
-            -- poss ~= ["hyphenation\n","hyphen-\nation",
-            --          "hy-\nphenation","\nhyphenation"]
+          poss = map cf $ reverse $ zip (inits hw) (tails hw)
 
           -- crea hyphenated from two bits
           cf ([], ew) = (if nlb then "" else "\n") ++ concat ew
