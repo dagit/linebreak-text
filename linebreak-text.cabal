@@ -22,3 +22,4 @@ library
   build-depends:       base >= 4.5 && < 5
                      , hyphenation >= 0.4 && < 1
                      , text
+                     -- , hspec
