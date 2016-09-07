@@ -1,0 +1,24 @@
+name:                linebreak-text
+version:             1.0.0.0
+synopsis:            breaks text to fit width
+description:         Simple functions to break a Text to fit a maximum text
+                     width, using Knuth-Liang hyphenation algorhitm.
+                     Based on the linebreak package by Francesco Ariis.
+license:             BSD3
+license-file:        LICENSE
+author:              Jason Dagit
+maintainer:          dagitj@gmail.com
+category:            Text
+build-type:          Simple
+cabal-version:       >=1.8
+
+source-repository head
+  type:     git
+  location: https://github.com/dagit/linebreak-text
+
+library
+  -- Modules exported by the library.
+  exposed-modules:     Text.LineBreak
+  build-depends:       base >= 4.5 && < 5
+                     , hyphenation >= 0.4 && < 1
+                     , text
