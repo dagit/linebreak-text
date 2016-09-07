@@ -19,6 +19,7 @@ source-repository head
 library
   -- Modules exported by the library.
   exposed-modules:     Text.LineBreak
+                       Text.LineBreak.Generic
   build-depends:       base >= 4.5 && < 5
                      , hyphenation >= 0.4 && < 1
                      , text
